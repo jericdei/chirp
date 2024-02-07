@@ -1,0 +1,4 @@
+name: chirp-laravel-inertia-vue
+recipe: laravel
+config:
+  webroot: ./public
