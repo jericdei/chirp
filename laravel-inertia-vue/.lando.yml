@@ -20,6 +20,10 @@ services:
             ports:
                 - "5173:5173"
             command: docker-php-entrypoint apache2-foreground
+    database:
+        portforward: 54320
+        creds:
+            database: laravel_inertia_vue
 proxy:
     appserver:
         - laravel-inertia-vue.chirp.localhost
