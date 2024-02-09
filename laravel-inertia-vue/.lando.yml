@@ -1,4 +1,34 @@
 name: chirp-laravel-inertia-vue
 recipe: laravel
 config:
-  webroot: ./public
+    webroot: ./public
+    php: 8.2
+    database: postgres
+services:
+    appserver:
+        ssl: false
+        scanner: false
+    bun:
+        api: 3
+        type: lando
+        scanner: false
+        ssl: false
+        moreHttpPorts:
+            - "5173:5173"
+        services:
+            image: oven/bun:1
+            ports:
+                - "5173:5173"
+            command: docker-php-entrypoint apache2-foreground
+proxy:
+    appserver:
+        - laravel-inertia-vue.chirp.localhost
+tooling:
+    bun:
+        service: bun
+    dev:
+        service: bun
+        cmd: bun dev
+    build:
+        service: bun
+        cmd: bun run build
