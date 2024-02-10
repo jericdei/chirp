@@ -6,6 +6,7 @@ import { Head, useForm } from "@inertiajs/vue3"
 import Avatar from "primevue/avatar"
 import Button from "primevue/button"
 import Textarea from "primevue/textarea"
+import moment from "moment"
 
 const props = defineProps<{
     chirps: Chirp[]
@@ -56,6 +57,12 @@ const form = useForm<{
                         <div class="flex gap-2">
                             <span>{{ chirp.user.name }}</span>
                             <span>@{{ chirp.user.username }}</span>
+                            <span>·</span>
+                            <span>{{ moment(chirp.created_at).fromNow() }}</span>
+                        </div>
+
+                        <div>
+                            <p>{{ chirp.content }}</p>
                         </div>
                     </div>
                 </div>
