@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\ChirpController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +14,9 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', fn () => inertia('Home'));
+Route::get('/', [ChirpController::class, 'index']);
+Route::get('{user:username}/status/{chirp}', [ChirpController::class, 'show']);
+Route::post('/', [ChirpController::class, 'store']);
+Route::delete('/', [ChirpController::class, 'destroy']);
 
 require __DIR__.'/auth.php';

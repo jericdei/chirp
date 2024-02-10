@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
+import { getInitials } from "@/Utilities/name"
+import { Chirp } from "@/types/models"
 import { Head, useForm } from "@inertiajs/vue3"
+import Avatar from "primevue/avatar"
 import Button from "primevue/button"
 import Textarea from "primevue/textarea"
+
+const props = defineProps<{
+    chirps: Chirp[]
+}>()
 
 const form = useForm<{
     message?: string
@@ -35,7 +42,23 @@ const form = useForm<{
             </div>
 
             <div>
-                <pre>Tweets</pre>
+                <div
+                    v-for="chirp in chirps"
+                    :key="chirp.id"
+                    class="flex gap-2"
+                >
+                    <Avatar
+                        :label="getInitials(chirp.user.name)"
+                        shape="circle"
+                    />
+
+                    <div class="flex flex-col gap-2">
+                        <div class="flex gap-2">
+                            <span>{{ chirp.user.name }}</span>
+                            <span>@{{ chirp.user.username }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>
