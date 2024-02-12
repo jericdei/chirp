@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Chirp;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +21,11 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password')
         ]);
 
+        /** @var Collection<User> $users */
         $users = User::factory(20)->create();
-        \App\Models\Chirp::factory(100)->recycle($users)->create();
+
+        \App\Models\Chirp::factory(100)->recycle($users)->create()->each(
+            fn (Chirp $chirp) => $chirp->likers()->saveMany($users->random(mt_rand(1, $users->count())))
+        );
     }
 }

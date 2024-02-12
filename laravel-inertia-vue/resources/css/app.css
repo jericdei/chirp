@@ -34,3 +34,23 @@
     --surface-900: 15 23 42;
     --surface-950: 3 6 23;
 }
+
+/* width */
+::-webkit-scrollbar {
+    @apply w-3;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    @apply bg-slate-50 dark:bg-slate-700;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    @apply rounded-xl bg-zinc-950;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-800;
+}

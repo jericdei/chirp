@@ -2,7 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import { getInitials } from "@/Utilities/name"
 import { Chirp } from "@/types/models"
-import { Head, useForm, usePage } from "@inertiajs/vue3"
+import { Head, router, useForm, usePage } from "@inertiajs/vue3"
 import Avatar from "primevue/avatar"
 import Button from "primevue/button"
 import Textarea from "primevue/textarea"
@@ -23,6 +23,12 @@ const form = useForm<{
 async function submit() {
     form.post(route("chirps.store"), {
         onSuccess: () => form.reset("content"),
+    })
+}
+
+async function toggleLike(chirp: Chirp) {
+    router.patch(route("chirps.like", chirp), {
+        add: !chirp.liked,
     })
 }
 </script>
@@ -50,6 +56,7 @@ async function submit() {
                         label="Post"
                         rounded
                         size="small"
+                        :disabled="!form.content"
                     />
                 </div>
             </form>
@@ -77,6 +84,26 @@ async function submit() {
 
                         <div>
                             <p>{{ chirp.content }}</p>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center">
+                                <i
+                                    class="pi cursor-pointer rounded-full p-2 text-xl hover:bg-slate-400 hover:bg-opacity-5"
+                                    :class="chirp.liked ? 'pi-heart-fill' : 'pi-heart'"
+                                    @click="toggleLike(chirp)"
+                                />
+
+                                <span>{{ chirp.likers.length }}</span>
+                            </div>
+
+                            <div class="flex items-center">
+                                <i
+                                    class="pi pi-comment cursor-pointer rounded-full p-2 text-xl hover:bg-slate-400 hover:bg-opacity-5"
+                                />
+
+                                <span>{{ chirp.comments }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>

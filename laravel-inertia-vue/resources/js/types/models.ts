@@ -10,9 +10,13 @@ export type User = Model & {
     email: string
 }
 
+export type Comment = Model & {}
+
 export type Chirp = Model & {
     user_id: string
     user: User
     content: string
-    likes: number
+    liked: boolean
+    likers: User[]
+    comments: Comment[]
 }
