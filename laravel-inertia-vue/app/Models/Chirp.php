@@ -10,10 +10,16 @@ class Chirp extends Model
 {
     use HasFactory;
 
+    /** @inheritDoc */
     protected $fillable = [
         'user_id',
         'content',
         'likes'
+    ];
+
+    /** @inheritDoc */
+    protected $attributes = [
+        'likes' => 0
     ];
 
     public function user(): BelongsTo

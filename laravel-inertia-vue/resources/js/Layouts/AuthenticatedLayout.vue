@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import Navigation from "@/Components/Navigation.vue"
+import { getInitials } from "@/Utilities/name"
+import { router } from "@inertiajs/vue3"
 import Avatar from "primevue/avatar"
 </script>
 
@@ -9,41 +12,26 @@ import Avatar from "primevue/avatar"
                 <div>
                     <h1 class="text-3xl font-extrabold">Chirp</h1>
 
-                    <nav class="mt-16">
-                        <ul class="flex flex-col items-start gap-4 text-xl">
-                            <li
-                                class="cursor-pointer rounded-full py-2 pl-4 pr-8 hover:bg-slate-300 hover:bg-opacity-20"
-                            >
-                                <a
-                                    href="#"
-                                    class="inline-flex items-center justify-start gap-4 font-bold"
-                                >
-                                    <i class="pi pi-home text-xl" />
-                                    Home
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <Navigation />
                 </div>
 
-                <div>
-                    <div
-                        class="flex cursor-pointer items-center justify-between gap-2 rounded-full p-2 hover:bg-slate-300 hover:bg-opacity-20"
-                    >
-                        <div class="inline-flex items-center gap-2">
-                            <Avatar
-                                label="FU"
-                                shape="circle"
-                            />
+                <div
+                    class="flex cursor-pointer items-center justify-between gap-2 rounded-full p-2 hover:bg-slate-300 hover:bg-opacity-20"
+                    @click="router.post('logout')"
+                >
+                    <div class="inline-flex items-center gap-2">
+                        <Avatar
+                            :label="getInitials($page.props.auth.user.name)"
+                            shape="circle"
+                        />
 
-                            <div class="text-sm">
-                                <p>Name</p>
-                                <p class="text-slate-400">@username</p>
-                            </div>
+                        <div class="text-sm">
+                            <p>{{ $page.props.auth.user.name }}</p>
+                            <p class="text-slate-400">@{{ $page.props.auth.user.username }}</p>
                         </div>
-
-                        <i class="pi pi-ellipsis-h" />
                     </div>
+
+                    <i class="pi pi-ellipsis-h" />
                 </div>
             </div>
         </div>

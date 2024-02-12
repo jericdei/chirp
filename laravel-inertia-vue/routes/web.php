@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChirpController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ChirpController::class, 'index']);
-Route::get('{user:username}/status/{chirp}', [ChirpController::class, 'show']);
-Route::post('/', [ChirpController::class, 'store']);
-Route::delete('/', [ChirpController::class, 'destroy']);
+Route::get('/', fn () => Auth::check() ? to_route('chirps.index') : to_route('login'));
+
+Route::middleware(['auth'])->as('chirps.')->group(function () {
+    Route::get('/home', [ChirpController::class, 'index'])->name('index');
+    Route::get('{user:username}/status/{chirp}', [ChirpController::class, 'show'])->name('show');
+    Route::post('/chirps', [ChirpController::class, 'store'])->name('store');
+    Route::delete('/chirps', [ChirpController::class, 'destroy'])->name('destroy');
+});
 
 require __DIR__.'/auth.php';

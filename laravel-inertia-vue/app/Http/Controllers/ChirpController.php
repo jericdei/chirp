@@ -14,7 +14,7 @@ class ChirpController extends Controller
     public function index()
     {
         return inertia('Home', [
-            'chirps' => Chirp::with(['user'])->latest()->limit(1)->get()
+            'chirps' => Chirp::with(['user'])->latest()->get()
         ]);
     }
 
@@ -23,7 +23,9 @@ class ChirpController extends Controller
      */
     public function store(UpsertChirpRequest $request)
     {
-        //
+        Chirp::create($request->validated());
+
+        return back()->with('success', 'Chirp has been posted.');
     }
 
     /**
